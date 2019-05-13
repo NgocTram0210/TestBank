@@ -1,0 +1,71 @@
+﻿@using Data.Entity;
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<News> listNews = ViewBag.listNews as List<News>;
+    List<NewsCate> listGroup = ViewBag.listGroup as List<NewsCate>;
+}
+<div class="text-center">
+    <h2 class="main-title">
+        NEWS<h2>
+            <hr>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div id="topheader">
+            <div class="list-group">
+                @if (listGroup != null && listGroup.Count > 0)
+                {
+                    foreach (var item in listGroup)
+                    {
+                        if (ViewBag.ItemGroup == item.NewsCateID)
+                        {
+                            <a href="#" class="list-group-item active"><i class="glyphicon glyphicon-pencil icon-menu"></i> @item.Title</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "News",new { id = item.NewsCateID })" class="list-group-item"><i class="glyphicon glyphicon-pencil icon-menu"></i> @item.Title</a>
+                        }
+                    }
+                }
+                @*<a href="#" class="list-group-item active">First item</a>
+                    <a href="#" class="list-group-item">Second item</a>
+                    <a href="#" class="list-group-item">Third item</a>*@
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-9 row">
+        @if (listNews != null && listNews.Count > 0)
+        {
+            foreach (var item in listNews)
+            {
+                <div class="col-lg-6">
+                    <div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <a href="@Url.Action("DetailNews", "News",new { id = item.NewsID })"><img src="/Images/News/@item.Image" width="100%" /></a>
+                            </div>
+                            <div class="col-lg-8">
+                                <a href="@Url.Action("DetailNews", "News",new { id = item.NewsID })"><h4>@item.Title</h4></a>
+                            </div>
+                        </div>
+                        @{ var t = "";
+                                if (Regex.Replace(item.Des, "<([^>]+)>", "") != null) { if (Regex.Replace(item.Des, "<([^>]+)>", "").Length > 100) { t = Regex.Replace(item.Des, "<([^>]+)>", "").ToString().Substring(0, 100) + "..."; } else { t = Regex.Replace(item.Des, "<([^>]+)>", ""); } }
+                            }
+                            <div>@t</div>
+                        
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<script>
+    $('#topheader .list-group a').on('click', function () {
+        $('#topheader .list-group').find('a.active').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>

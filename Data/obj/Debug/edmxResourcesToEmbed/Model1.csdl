@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NganHangDeThiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Birthday" Type="DateTime" Precision="3" />
+    <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Decentralization" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Decentralization">
+    <Key>
+      <PropertyRef Name="decentralizationID" />
+    </Key>
+    <Property Name="decentralizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="ExamID" />
+    </Key>
+    <Property Name="ExamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Class" Type="Int32" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="True" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Level" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="LevelID" />
+    </Key>
+    <Property Name="LevelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LevelName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TestScore">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="Test" Type="Int32" />
+    <Property Name="DateTest" Type="DateTime" Precision="3" />
+    <Property Name="Class" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="NganHangDeThiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="Decentralizations" EntityType="Self.Decentralization" />
+    <EntitySet Name="Exams" EntityType="Self.Exam" />
+    <EntitySet Name="Levels" EntityType="Self.Level" />
+    <EntitySet Name="TestScores" EntityType="Self.TestScore" />
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,99 @@
+﻿@using Data.Entity;
+@{
+    ViewBag.Title = "All Test";
+    Random r = new Random();
+    List<Class> ListClasses = ViewBag.ListClasses as List<Class>;
+}
+<style>
+    .backgroud {
+        border: 1px solid;
+        border-radius: 5px;
+        display: block;
+        text-align: center;
+    }
+
+    .nencapdo {
+        background-color: yellow;
+    }
+
+    a {
+        color: white;
+    }
+
+        a:hover {
+            color: white;
+            text-decoration: none;
+            background-color: rgb(254, 128, 0);
+        }
+
+    .nenbutton {
+        background-color: #9CCC65;
+        padding: 10px 0px;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        border: 1px #78a149 solid;
+    }
+</style>
+<div class="text-center">
+    <h2 class="main-title">MATH TEST QUESTION SET 2018</h2>
+    <hr>
+</div>
+<div style="margin-bottom:100px">
+    @if (ListClasses != null)
+    {
+        foreach (var item in ListClasses)
+        {
+            
+            <div class="col-sm-3" style="margin:10px 0px; height:350px">
+                <div class="backgroud">
+                    <div style="padding:20px 0px; background-color:rgb(@r.Next(0,256), @r.Next(0,256), @r.Next(0,256)); border-bottom-left-radius:50px; border-bottom-right-radius:50px"><img src="@Url.Content("~/Content/img/"+ item.Image)" style="width:40%"></div>
+                    <div style="font-size:22px; color:black;font-weight:bold; padding:5px 10px">Test subjects for math tests @item.ClassName</div>
+                    <h5 style="padding:0px 10px; text-align:center">@item.Describe</h5>
+                    <div style="background-color: yellow; border:1px black">
+                        <a href="@Url.Action("Index","Testing", new {id = item.ClassID, level = 1 })">
+                            <div class="col-sm-4 hover nenbutton">
+                                Easy
+                            </div>
+                        </a>
+                        <a href="@Url.Action("Index","Testing", new {id = item.ClassID, level = 2  })">
+                            <div class="col-sm-4  hover1 nenbutton">
+                                Medium
+                            </div>
+                        </a>
+                        <a href="@Url.Action("Index","Testing", new {id = item.ClassID, level = 3 })">
+                            <div class="col-sm-4  hover2 nenbutton">
+                                Hard
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<div>
+    <span>&nbsp;</span>
+</div>
+
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<script src="~/Content/js/bootstrap.js"></script>
+<script src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+<script>
+
+    $(".hover").on("mouseover", function () {
+        $(this).css({ 'background-color': '#337ab7', 'transition-property': 'background', 'transition-duration': '1s' });
+    }).on("mouseleave", function () {
+        $(this).css({ 'background-color': '#9CCC65', 'transition-property': 'background', 'transition-duration': '1s' });
+    });
+    $(".hover1").on("mouseover", function () {
+        $(this).css({ 'background-color': 'yellow', 'transition-property': 'background', 'transition-duration': '1s' });
+    }).on("mouseleave", function () {
+        $(this).css({ 'background-color': '#9CCC65', 'transition-property': 'background', 'transition-duration': '1s' });
+    });
+    $(".hover2").on("mouseover", function () {
+        $(this).css({ 'background-color': 'red', 'transition-property': 'background', 'transition-duration': '1s' });
+    }).on("mouseleave", function () {
+        $(this).css({ 'background-color': '#9CCC65', 'transition-property': 'background', 'transition-duration': '1s' });
+    });
+</script>

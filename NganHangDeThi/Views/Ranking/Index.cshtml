@@ -1,0 +1,285 @@
+﻿
+<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+@{
+    /**/
+
+    ViewBag.Title = "Ranking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Data.Entity;
+@{
+    List<XepHang_Result> ListRank = ViewBag.Rank as List<XepHang_Result>;
+    List<Class> listClass = ViewBag.listClass as List<Class>;
+}
+
+<div class="text-center">
+    <h2 class="main-title">Ranking by Class</h2>
+    <hr>
+</div>
+<div class="row" style="padding:20px 0px">
+    @if (listClass != null && listClass.Count > 0)
+    {
+    <div class="col-sm-2">
+        <select id="class" class="form-control" style="width:100%">
+            <option value="-1">-- Select Class --</option>
+            @foreach (var item in listClass)
+            {
+                <option value="@item.ClassID">@item.ClassName</option>
+
+            }
+        </select>
+    </div>
+    <div class="col-sm-3">
+        <span class="button-checkbox">
+            <button type="button" class="btn" data-color="primary">Rank by Level</button>
+            <input type="checkbox" class="hidden" id="chk" />
+
+        </span>
+    </div>
+    }
+</div>
+<div class="row" id="nolevel" style="display:none">
+    <div class="col-sm-3" id="No1">
+
+    </div>
+    <div class="col-sm-9">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th width="1">Ranking</th>
+                    <th>Account Name</th>
+                    <th>Test Score</th>
+                    <th>Date test</th>
+                </tr>
+            </thead>
+            <tbody id="notlevel"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" id="level" style="display:none">
+    <div class="col-sm-4">
+        <div style="text-align:center"><h3>Level Easy</h3></div>
+        <div id="No1lv1">
+
+        </div>
+        <div>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="1">Ranking</th>
+                        <th>Account Name</th>
+                        <th>Test Score</th>
+                        <th>Date test</th>
+                    </tr>
+                </thead>
+                <tbody id="lv1"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div style="text-align:center"><h3>Level Medium</h3></div>
+        <div id="No1lv2">
+
+        </div>
+        <div>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="1">Ranking</th>
+                        <th>Account Name</th>
+                        <th>Test Score</th>
+                        <th>Date test</th>
+                    </tr>
+                </thead>
+                <tbody id="lv2"></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div style="text-align:center"><h3>Level Hard</h3></div>
+        <div id="No1lv3">
+
+        </div>
+        <div>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th width="1">Ranking</th>
+                        <th>Account Name</th>
+                        <th>Test Score</th>
+                        <th>Date test</th>
+                    </tr>
+                </thead>
+                <tbody id="lv3"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+
+    function select() {
+        var cl = $('#class :selected').val();
+        if (document.getElementById('chk').checked) {
+
+            $("#lv1").empty();
+            $('#No1lv1').empty();
+
+            $("#lv2").empty();
+            $('#No1lv2').empty();
+
+            $("#lv3").empty();
+            $('#No1lv3').empty();
+
+            $('#level').removeAttr("style");
+            $('#nolevel').attr("style", "display:none");
+            $.ajax({
+                type: "POST", url: "/Ranking/RankingClassLevel",
+                data: JSON.stringify({ cl: cl }), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    var t = "";
+                    var no1 = "";
+                    $.each(data[0], function (i, item) {
+                        var date = new Date(parseInt(item.DateTest.replace("/Date(", "").replace(")/", ""), 10));
+                        if (i == 0) {
+                            no1 = "<div style='text-align:center; background-color:#fd7e14;width:70%;padding-top:15px ; margin:auto'><i style='color:white' class='fas fa-crown fa-5x'></i><div style='text-align:center; background-color:#fcaf6e;'>";
+                            no1 += "<h2>NO 1.</h2><h3>" + item.AccountName + "</h3><p>" + item.Test + " Points<br />" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</p></div></div>";
+                        } else
+                            t += "<tr><td>" + (i + 1) + "</td><td>" + item.AccountName + "</td><td>" + item.Test + "</td><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td></tr>";
+                    });
+                    $('#lv1').append(t);
+                    $('#No1lv1').append(no1);
+
+                    t = "";
+                    no1 = "";
+                    $.each(data[1], function (i, item) {
+                        var date = new Date(parseInt(item.DateTest.replace("/Date(", "").replace(")/", ""), 10));
+                        if (i == 0) {
+                            no1 = "<div style='text-align:center; background-color:#fd7e14;width:70%;padding-top:15px ; margin:auto'><i style='color:white' class='fas fa-crown fa-5x'></i><div style='text-align:center; background-color:#fcaf6e;'>";
+                            no1 += "<h2>NO 1.</h2><h3>" + item.AccountName + "</h3><p>" + item.Test + " Points<br />" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</p></div></div>";
+                        } else
+                            t += "<tr><td>" + (i + 1) + "</td><td>" + item.AccountName + "</td><td>" + item.Test + "</td><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td></tr>";
+                    });
+                    $('#lv2').append(t);
+                    $('#No1lv2').append(no1);
+
+                    t = "";
+                    no1 = "";
+                    $.each(data[2], function (i, item) {
+                        var date = new Date(parseInt(item.DateTest.replace("/Date(", "").replace(")/", ""), 10));
+                        if (i == 0) {
+                            no1 = "<div style='text-align:center; background-color:#fd7e14;width:70%;padding-top:15px ; margin:auto'><i style='color:white' class='fas fa-crown fa-5x'></i><div style='text-align:center; background-color:#fcaf6e;'>";
+                            no1 += "<h2>NO 1.</h2><h3>" + item.AccountName + "</h3><p>" + item.Test + " Points<br />" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</p></div></div>";
+                        } else
+                            t += "<tr><td>" + (i + 1) + "</td><td>" + item.AccountName + "</td><td>" + item.Test + "</td><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td></tr>";
+                    });
+                    $('#lv3').append(t);
+                    $('#No1lv3').append(no1);
+                }
+            });
+
+        }
+        else {
+
+            $("#notlevel").empty();
+            $('#No1').empty();
+            $.ajax({
+                type: "POST", url: "/Ranking/RankingClass",
+                data: JSON.stringify({ cl: cl }), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    var t = "";
+                    var no1 = "";
+                    $('#nolevel').removeAttr("style");
+                    $('#level').attr("style", "display:none");
+                    $.each(data, function (i, item) {
+                        var date = new Date(parseInt(item.DateTest.replace("/Date(", "").replace(")/", ""), 10));
+                        if (i == 0) {
+                            no1 = "<div style='text-align:center; background-color:#fd7e14;width:70%;padding-top:15px ; margin:auto'><i style='color:white' class='fas fa-crown fa-5x'></i><div style='text-align:center; background-color:#fcaf6e;'>";
+                            no1 += "<h2>NO 1.</h2><h3>" + item.AccountName + "</h3><p>" + item.Test + " Points<br />" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</p></div></div>";
+                        } else
+                            t += "<tr><td>" + (i + 1) + "</td><td>" + item.AccountName + "</td><td>" + item.Test + "</td><td>" + date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "</td></tr>";
+                    });
+                    $('#notlevel').append(t);
+                    $('#No1').append(no1);
+                }
+            });
+        }
+    }
+    $('#class').change(function () {
+        select();
+    });
+</script>
+<script>
+    $(function () {
+        $('.button-checkbox').each(function () {
+
+            // Settings
+            var $widget = $(this),
+                $button = $widget.find('button'),
+                $checkbox = $widget.find('input:checkbox'),
+                color = $button.data('color'),
+                settings = {
+                    on: {
+                        icon: 'glyphicon glyphicon-check'
+                    },
+                    off: {
+                        icon: 'glyphicon glyphicon-unchecked'
+                    }
+                };
+
+            // Event Handlers
+            $button.on('click', function () {
+                $checkbox.prop('checked', !$checkbox.is(':checked'));
+                $checkbox.triggerHandler('change');
+                updateDisplay(); select();
+            });
+            $checkbox.on('change', function () {
+                updateDisplay();
+            });
+
+            // Actions
+            function updateDisplay() {
+                var isChecked = $checkbox.is(':checked');
+
+                // Set the button's state
+                $button.data('state', (isChecked) ? "on" : "off");
+
+                // Set the button's icon
+                $button.find('.state-icon')
+                    .removeClass()
+                    .addClass('state-icon ' + settings[$button.data('state')].icon);
+
+                // Update the button's color
+                if (isChecked) {
+                    $button
+                        .removeClass('btn-default')
+                        .addClass('btn-' + color + ' active');
+                }
+                else {
+                    $button
+                        .removeClass('btn-' + color + ' active')
+                        .addClass('btn-default');
+                }
+            }
+
+            // Initialization
+            function init() {
+
+                updateDisplay();
+
+                // Inject the icon if applicable
+                if ($button.find('.state-icon').length == 0) {
+                    $button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+                }
+            }
+            init();
+        });
+    });
+</script>

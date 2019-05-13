@@ -1,0 +1,60 @@
+﻿@using Data.Entity;
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Cours> Courses = ViewBag.Courses as List<Cours>;
+}
+
+<div class="text-center">
+    <h2 class="main-title">
+        @if (Courses != null && Courses.Count > 0)
+        {
+            foreach (var item in Courses)
+            {
+                @item.Title
+            }
+        }
+        <h2>
+            <hr>
+</div>
+<div class="row">
+    @if (Courses != null && Courses.Count > 0)
+    {
+        foreach (var item in Courses)
+        {
+            <h3>@item.Content</h3>
+            <div class="row">
+                <div class="col-lg-9">
+
+                    <div>@Html.Raw(item.Des)</div>
+                </div>
+                <div class="col-lg-3" style="background-color:#f1f1f1; padding:5px;text-align:center">
+                    <div>
+                        <div><p style="color:#16499a">Package learning only with<h2 style="color:red"><span id="@item.CoursesID"></span> VND</h2></p></div>
+
+                        <div><div style="color:#16499a">Registration deadline:<h5 style="color:red">@item.RegistrationDate.ToString().Split('/')[1]/@item.RegistrationDate.ToString().Split('/')[0]/@item.RegistrationDate.ToString().Split('/')[2].ToString().Substring(0, 4)</h5></div></div>
+                        <div>
+                            <p style="color:#16499a">Opening day:<h5 style="color:red"> @item.DateOpen.ToString().Split('/')[1]/@item.DateOpen.ToString().Split('/')[0]/@item.DateOpen.ToString().Split('/')[2].ToString().Substring(0, 4)</h5></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                        $.ajax({
+                            type: "POST", url: "/CoursesAdmin/formatNumber",
+                            data: JSON.stringify({ Number:@item.Price}), dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            cache: false, async: true, processData: true, traditional: true,
+                            success: function (data) {
+                                $('#@item.CoursesID').text(data);
+                            },
+                            error: function (xhr, textStatus) {
+                                console.log(xhr + "\n" + textStatus);
+                            }
+                        });
+            </script>
+        }
+    }
+</div>
+

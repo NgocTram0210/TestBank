@@ -1,0 +1,374 @@
+﻿@using Data.Entity;
+@{
+    ViewBag.Title = "Index";
+    var Class = ViewBag.Class as Class;
+    List<Exam> ListExam = ViewBag.ListExam as List<Exam>;
+
+}
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<div style="text-align:center; background-color:#29c2be; color:forestgreen; padding:10px 10px; border-radius:5px; margin:5px 0px">
+    <div class="text-center">
+        <h2 class="main-title" style="color:white">SUBJECT MATH CLASS @Class.ClassID</h2>
+        <hr>
+    </div>
+    <h4>@Class.Describe</h4>
+    <h4>After finishing the examination, students will be able to see their scores and answers.</h4>
+</div>
+@{if (ListExam == null || ListExam.Count < 40)
+    {<div style="text-align:center; padding:5px 0px; font-size:18px;">Class has no exam questions.</div>}
+    else
+    {
+        <form id="ketqua" style="text-align:center; padding:5px 0px; font-size:18px; display:none">
+            <div>You have finished the test with the correct number of sentences <span style="color:red" id="slCaudung"></span></div>
+            <div>You can review the results below:</div>
+            <div>(The selected answer is your answer, the answer with red is the right answer.)</div>
+        </form>
+
+        <div id="about" style="font-size:17px; text-align:center; padding:10px 0px">
+            <span>To start the practice test, click on the "Start" button!</span><br />
+            <span>To submit a lesson, please click the "Submit" button and when the TIME is finished, the test will automatically close!</span>
+        </div>
+
+        <form id="batdau">
+            <div style="display:block; text-align:center">
+                <button type="button" id="start" onclick="batdau(@ViewBag.Time)" class="btn btn-danger" style="font-size:22px">Start</button>
+            </div>
+        </form>
+
+        @*<form name="cd">
+                <input id="txt" readonly="true" type="text" value="00:30" border="0" name="disp" />
+            </form>*@
+
+        <div style="display:none; position:fixed; top:10px; color:white; z-index: 1;font-size:18px;background-position:center; padding:15px 20px;background-repeat: no-repeat; background-image: url(../../Content/img/1057fef1736e4f3.png); background-size:90px 60px" id="clockdiv"></div>
+
+
+        <form id="form" style="display:none">
+            <div class="row">
+                <div  class="col-lg-3" style="border:1px solid #337ab7; border-radius:10px;margin:20px 0px;">
+                    <div style="overflow:scroll; height:500px; background-color:#f8f2f5; padding:10px 10px">
+                        <div class="row" style="color:red">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-1">A</div>
+                            <div class="col-sm-1">B</div>
+                            <div class="col-sm-1">C</div>
+                            <div class="col-sm-1">D</div>
+                        </div>
+                        @if (ListExam != null)
+                        {
+                            int i = 1;
+                            foreach (var item in ListExam)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Câu @i:
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="radio" value="A" id="@item.ExamID" name="View @i" disabled="disabled" />
+                                    </div><div class="col-sm-1">
+                                        <input type="radio" value="B" id="@item.ExamID" name="View @i" disabled="disabled" />
+                                    </div><div class="col-sm-1">
+                                        <input type="radio" value="C" id="@item.ExamID" name="View @i" disabled="disabled" />
+                                    </div><div class="col-sm-1">
+                                        <input type="radio" value="D" id="@item.ExamID" name="View @i" disabled="disabled" />
+                                    </div>
+                                </div>
+                                <div style="display:none">
+                                    @(i = i + 1)
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-9" style="overflow:scroll; height:500px;margin:20px 0px; background-color:#f8f2f5; padding:10px 10px">
+                    @if (ListExam != null)
+                    {
+                        int i = 1;
+                        foreach (var item in ListExam)
+                        {
+
+                            <div style=" font-size:17px" id="@i" data-Exam="@item.ExamID"><strong style="text-decoration:underline; font-size:17px">Câu @i:</strong>@Html.Raw(item.Question)</div>
+                            <div class="row" style="border:1px black solid; margin:5px 5px; padding:5px 5px;font-size:17px">
+                                <div class="col-sm-3 select">
+                                    <input type="radio" value="A" id="@item.ExamID" name="@i" onclick="chk('@i','A')" />
+                                    <lable id="@(item.ExamID.ToString() +"testA")">@Html.Raw(item.AnswerA)</lable>
+                                </div>
+
+                                <div class="col-sm-3 select">
+                                    <input type="radio" value="B" id="@item.ExamID" name="@i" onclick="chk('@i','B')" />
+                                    <lable id="@(item.ExamID.ToString() +"testB")">@Html.Raw(item.AnswerB)</lable>
+                                </div>
+
+                                <div class="col-sm-3 select">
+                                    <input type="radio" value="C" id="@item.ExamID" name="@i" onclick="chk('@i','C')" />
+                                    <lable id="@(item.ExamID.ToString() +"testC")">@Html.Raw(item.AnswerC)</lable>
+                                </div>
+
+                                <div class="col-sm-3 select">
+                                    <input type="radio" value="D" id="@item.ExamID" name="@i" onclick="chk('@i','D')" />
+                                    <lable id="@(item.ExamID.ToString() +"testD")">@Html.Raw(item.AnswerD)</lable>
+                                </div>
+
+                            </div>
+
+                            <div style="display:none">
+                                @(i = i + 1)
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div style="display:block; text-align:center">
+                <button type="button" id="nopbai" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    } }
+
+
+@*<button id="pause">Pause</button>
+    <button id="resume">Resume</button>*@
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Content/jquery.countdown-2.2.0/jquery.countdown.js"></script>
+<script src="~/Content/jquery.countdown-2.2.0/jquery.countdown.min.js"></script>
+
+<script>
+
+</script>
+
+@*Thời gian làm bài*@
+
+<script>
+    function chk(name, da) {
+        var group = 'View ' + name;
+        var x = document.getElementsByName(group);
+        var i;
+        for (i = 0; i < x.length; i++) {
+            if (x[i].type == "radio") {
+                if (x[i].value == da)
+                    x[i].checked = true;
+            }
+        }
+    }
+
+    function tt(i) {
+        var time_in_minutes = i;
+        var current_time = Date.parse(new Date());
+        var deadline = new Date(current_time + time_in_minutes * 60 * 1000);
+
+        function time_remaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60));
+            //var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            //var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return { 'total': t, /*'days': days, 'hours': hours,*/ 'minutes': minutes, 'seconds': seconds };
+        }
+
+        function run_clock(id, endtime) {
+            var clock = document.getElementById(id);
+            function update_clock() {
+                var t = time_remaining(endtime);
+
+                clock.innerHTML = ('0' + t.minutes).slice(-2) + ":" + ('0' + t.seconds).slice(-2);
+
+                // clock.innerHTML = 'minutes: ' + t.minutes + '<br>seconds: ' + t.seconds;
+                //clock.innerHTML =  t.minutes + ':' + t.seconds;
+                if (t.total <= 0) {
+                    if ($('#form :input').attr('disabled') === "disabled") {
+                        clearInterval(timeinterval);
+                    }
+                    else {
+                        clearInterval(timeinterval);
+                        alert("Bạn đã hết thời gian, tự động nộp bài!");
+                        $('#nopbai').click();
+                    }
+
+                }
+            }
+            update_clock(); // run function once at first to avoid delay
+            timeinterval = setInterval(update_clock, 1000);
+        }
+        run_clock('clockdiv', deadline);
+
+
+        var timeinterval;
+        var paused = false; // is the clock paused?
+        var time_left; // time left on the clock when paused
+
+        function pause_clock() {
+            if (!paused) {
+                paused = true;
+                clearInterval(timeinterval); // stop the clock
+                time_left = time_remaining(deadline).total; // preserve remaining time
+            }
+        }
+
+        function resume_clock() {
+            if (paused) {
+                paused = false;
+
+                // update the deadline to preserve the amount of time remaining
+                deadline = new Date(Date.parse(new Date()) + time_left);
+
+                // start the clock
+                run_clock('clockdiv', deadline);
+            }
+        }
+        //document.getElementById('nopbai').onclick = resume_clock;
+    }
+
+    // handle pause and resume button clicks
+    //document.getElementById('pause').onclick = pause_clock;
+
+    function batdau(i) {
+        $('#form').css('display', 'block');
+        $('#clockdiv').css('display', 'block');
+
+        $('#about').css('display', 'none');
+        $('#batdau').css('display', 'none');
+        tt(i);
+    }
+
+    $('#nopbai').on('click', function () {
+        $('#clockdiv').css('display', 'none');
+        var tam = [];
+        for (let i = 1; i < 41; i++) {
+            if ($('[name="' + i + '"]:radio:checked').val() == null) {
+                const tam1 = {
+                    'ExamID': $("#" + i).attr('data-Exam'),
+                    'AnswerTrue': 'E'
+                };
+                tam.push(tam1);
+            }
+            else {
+                const tam1 = {
+                    'ExamID': $("#" + i).attr('data-Exam'),
+                    'AnswerTrue': $('[name="' + i + '"]:radio:checked').val()
+                };
+                tam.push(tam1);
+            }
+
+
+        }
+        var lv = @ViewBag.level;
+        var cl = @ViewBag.cl;
+        var time = 60 - (Number($('#clockdiv').text().split(":")[0]) + Number($('#clockdiv').text().split(":")[1]/60));
+
+        $.ajax({
+            type: "POST", url: "/Testing/Point",
+            data: JSON.stringify({ model:tam, cl:cl,lv:lv,time:time }), dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            cache: false, async: true, processData: true, traditional: true,
+            success: function (data) {
+                console.log(data);
+                if (data == false) {
+
+                    alert("Xảy ra lỗi trong quá trình xử lý");
+                } else {
+                    $('#ketqua').css('display', 'block');
+                    $('#bodem').css('display', 'none');
+                    for (let i = 0; i < data[0].ds.length; i++) {
+
+                        $("#" + data[0].ds[i].ExamID + "test" + data[0].ds[i].AnswerTrue).css("color", "red");
+                    }
+                    $("#form :input").attr("disabled", true);
+                    $("#slCaudung").text(data[0].sl);
+                }
+            },
+            error: function (xhr, textStatus) {
+                console.log(xhr + "\n" + textStatus);
+            }
+        });
+
+
+
+    });
+</script>
+
+
+<script language="javascript">
+
+    // Created by: Neill Broderick :: http://www.bespoke-software-solutions.co.uk/downloads/downjs.php
+
+    var mins;
+    var secs;
+
+    function cd() {
+
+        mins = 1 * m("01"); // change minutes here
+        secs = 0 + s(":01"); // change seconds here (always add an additional second to your total)
+        redo();
+    }
+
+    function m(obj) {
+
+        for (var i = 0; i < obj.length; i++) {
+            if (obj.substring(i, i + 1) == ":")
+                break;
+        }
+        return (obj.substring(0, i));
+    }
+
+    function s(obj) {
+
+        for (var i = 0; i < obj.length; i++) {
+            if (obj.substring(i, i + 1) == ":")
+                break;
+        }
+        return (obj.substring(i + 1, obj.length));
+    }
+
+    function dis(mins, secs) {
+        var disp;
+
+        if (mins <= 9) {
+            disp = " 0";
+        }
+        else {
+            disp = " ";
+        }
+
+        disp += mins + ":";
+
+        if (secs <= 9) {
+            disp += "0" + secs;
+
+        } else {
+            disp += secs;
+        }
+
+        return (disp);
+    }
+
+    function redo() {
+        secs--;
+        if (secs == -1) {
+            secs = 59;
+            mins--;
+        }
+        document.cd.disp.value = dis(mins, secs); // setup additional displays here.
+
+        if ((mins == 0) && (secs == 0)) {
+            //window.alert("Time is up. Press OK to continue."); // change timeout message as required
+            alert("Bạn đã hết thời gian!");
+            $('#nopbai').click();
+            // window.location = "yourpage.htm" // redirects to specified page once timer ends and ok button is pressed
+
+        }
+        else {
+            cd = setTimeout("redo()", 1000);
+        }
+    }
+
+    function init() {
+        cd();
+    }
+
+
+</script>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NganHangDeThi", "NganHangDeThi\NganHangDeThi.csproj", "{8D64EDA2-4126-4920-80AA-C22531AA4A67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{F210ECE8-99C5-4E10-9AAB-D216192EAFF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D64EDA2-4126-4920-80AA-C22531AA4A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D64EDA2-4126-4920-80AA-C22531AA4A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D64EDA2-4126-4920-80AA-C22531AA4A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D64EDA2-4126-4920-80AA-C22531AA4A67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F210ECE8-99C5-4E10-9AAB-D216192EAFF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F210ECE8-99C5-4E10-9AAB-D216192EAFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F210ECE8-99C5-4E10-9AAB-D216192EAFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F210ECE8-99C5-4E10-9AAB-D216192EAFF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {269F88F3-58AA-4C03-9229-3BE8BB0861CD}
+	EndGlobalSection
+EndGlobal

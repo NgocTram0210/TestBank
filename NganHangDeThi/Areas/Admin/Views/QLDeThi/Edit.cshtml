@@ -1,0 +1,296 @@
+﻿@using Data.Entity;
+@using System.Data;
+@model Exam
+@{
+    ViewBag.Title = "Edit Exam";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<Class> listClass = ViewBag.listClass as List<Class>;
+}
+
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<script src="~/Content/js/bootstrap.js"></script>
+<script src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+        let da;
+
+
+        //$('#Select').on('click', function (e) {
+        //    e.preventDefault();
+        //    var ckfinder = new CKFinder();
+        //    ckfinder.selectActionFunction = function (url) {
+        //        $('#txtImages').val(url);
+
+        //    };
+        //    ckfinder.popup();
+        //});
+
+        var editor = CKEDITOR.replace('contents', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+
+        var editor1 = CKEDITOR.replace('A', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+        var editor = CKEDITOR.replace('B', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+        var editor = CKEDITOR.replace('C', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+        var editor = CKEDITOR.replace('D', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+
+
+        // Cấu hình lại màu nền giao diện và chiều cao
+        CKEDITOR.config.uiColor = '#9AB8F3';
+        CKEDITOR.config.height = '70px';
+    });
+</script>
+
+<style>
+
+    #formEdit div {
+        padding: 10px 5px;
+        font-family: 'Times New Roman';
+        font-size: 14px;
+    }
+</style>
+
+@if (Model == null)
+{
+    <h3 style="padding-top:50px;padding-bottom:20px; font-family:'Times New Roman', Times, serif">Edit Exam</h3>
+    <form id="formEdit">
+        <div>
+            Lớp:
+            <select id="lop" style="width:20%" class="form-control">
+                @if (listClass != null && listClass.Count > 0)
+                {
+                    foreach (var item in listClass)
+                    {
+                        <option value="@item.ClassID">@item.ClassName</option>
+                    }
+                }
+            </select>
+        </div>
+
+
+        <div>Question</div>
+        <div>
+            <textarea id="contents"></textarea>
+        </div>
+
+
+        <div>Đáp án A</div>
+        <div>
+            <textarea id="A"></textarea>
+        </div>
+
+
+        <div>Đáp án B</div>
+        <div>
+            <textarea id="B"></textarea>
+        </div>
+
+
+        <div>Đáp án C</div>
+        <div>
+            <textarea id="C"></textarea>
+        </div>
+
+
+        <div>Đáp án D</div>
+        <div>
+            <textarea id="D"></textarea>
+        </div>
+
+        <div>
+            Chọn đáp án đúng:
+
+            <select class="form-control" id="true" style="width:100px">
+
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+                <option value="4">D</option>
+            </select>
+        </div>
+        <div>
+            Level:
+
+            <select id="level" style="width:20%" class="form-control">
+
+                <option value="1">Dễ</option>
+                <option value="2">Trung Bình</option>
+                <option value="3">Khó</option>
+            </select>
+        </div>
+    </form>
+    <div style=" text-align:center">
+        <button id="them" class="btn btn-danger">Thêm</button>
+
+    </div>
+
+    <script>
+
+    $('#them').on('click', function () {
+        if (CKEDITOR.instances.contents.getData() == '' || CKEDITOR.instances.A.getData() == '' || CKEDITOR.instances.B.getData() == '' || CKEDITOR.instances.C.getData() == '' || CKEDITOR.instances.D.getData() == '') {
+            alert('Bạn chưa nhập đủ thông tin!');
+        }
+        else {
+
+            const obj = {
+                Class: $("#lop").val(),
+                Question: CKEDITOR.instances.contents.getData(),
+                AnswerA: CKEDITOR.instances.A.getData(),
+                AnswerB: CKEDITOR.instances.B.getData(),
+                AnswerC: CKEDITOR.instances.C.getData(),
+                AnswerD: CKEDITOR.instances.D.getData(),
+                True: $('#true :selected').text(),
+                Level: $("#level").val()
+            };
+            $.ajax({
+                type: "POST", url: "/QLDeThi/Add",
+                data: JSON.stringify(obj), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    if (data == true) {
+                        alert("Thêm thành công!");
+                        window.location.href = "/Admin/QLDeThi/Index";
+                    } else {
+                        alert("Đã xãy ra lỗi!");
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log(xhr + "\n" + textStatus);
+                }
+            });
+        }
+    });
+    </script>
+}
+else
+{
+    <script>
+        $(document).ready(function () {
+            $('select[id=lop]').val(@Model.Class);
+            $('select[id=true]').val(@ViewBag.da);
+            $('select[id=level]').val(@ViewBag.le);
+        });
+    </script>
+    <h3 style="padding-top:50px;padding-bottom:20px; font-family:'Times New Roman', Times, serif">Edit Exam</h3>
+    <form id="formEdit">
+        <div>
+            Lớp:
+            <select class="form-control" id="lop" style="width:100px">
+                @if (listClass != null && listClass.Count > 0)
+                {
+                    foreach (var item in listClass)
+                    {
+                        <option value="@item.ClassID">@item.ClassName</option>
+                    }
+                }
+            </select>
+        </div>
+
+
+        <div>Question</div>
+        <div>
+            <textarea id="contents">@Model.Question</textarea>
+        </div>
+
+
+        <div>Đáp án A</div>
+        <div>
+            <textarea id="A">@Model.AnswerA</textarea>
+        </div>
+
+
+        <div>Đáp án B</div>
+        <div>
+            <textarea id="B">@Model.AnswerB</textarea>
+        </div>
+
+
+        <div>Đáp án C</div>
+        <div>
+            <textarea id="C">@Model.AnswerC</textarea>
+        </div>
+
+
+        <div>Đáp án D</div>
+        <div>
+            <textarea id="D">@Model.AnswerD</textarea>
+        </div>
+
+        <div>
+            Chọn đáp án đúng:
+
+            <select id="true" style="width:20%" class="form-control" >
+
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+                <option value="4">D</option>
+            </select>
+        </div>
+        <div>
+            Level:
+
+            <select id="level" style="width:20%" class="form-control">
+
+                <option value="1">Dễ</option>
+                <option value="2">Trung Bình</option>
+                <option value="3">Khó</option>
+            </select>
+        </div>
+    </form>
+    <div style=" text-align:center">
+        <button id="capnhat" class="btn btn-danger">Cập nhật</button>
+
+    </div>
+
+
+    <script>
+
+    $('#capnhat').on('click', function () {
+        if (CKEDITOR.instances.contents.getData() == '' || CKEDITOR.instances.A.getData() == '' || CKEDITOR.instances.B.getData() == '' || CKEDITOR.instances.C.getData() == '' || CKEDITOR.instances.D.getData() == '') {
+            alert('Bạn chưa nhập đủ thông tin!');
+        }
+        else {
+
+            const obj = {
+                ExamID: @Model.ExamID,
+                Class: $("#lop").val(),
+                Question: CKEDITOR.instances.contents.getData(),
+                AnswerA: CKEDITOR.instances.A.getData(),
+                AnswerB: CKEDITOR.instances.B.getData(),
+                AnswerC: CKEDITOR.instances.C.getData(),
+                AnswerD: CKEDITOR.instances.D.getData(),
+                True: $('#true :selected').text(),
+                Level: $("#level").val()
+            };
+            $.ajax({
+                type: "POST", url: "/QLDeThi/CapNhat",
+                data: JSON.stringify(obj), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    if (data == true) {
+                        alert("Cập nhật thành công!");
+                        window.location.href = "/Admin/QLDeThi/Index";
+                    } else {
+                        alert("Đã xãy ra lỗi!");
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log(xhr + "\n" + textStatus);
+                }
+            });
+        }
+    });
+    </script>
+}

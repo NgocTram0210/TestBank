@@ -1,0 +1,199 @@
+﻿@using Data.Entity;
+@{
+    ViewBag.Title = "ListAbout";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<About> listAbout = ViewBag.listAbout as List<About>;
+}
+
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<h3 style="padding-top:50px;padding-bottom:30px; font-family:'Times New Roman', Times, serif">
+    DANH MỤC GIỚI THIỆU
+</h3>
+
+<div style="display:block; text-align:right">
+    <a href="#exampleModal" data-animation="fadein" data-toggle="modal" data-overlayColor="#38414a" class="btn btn-primary" data-id="-1" data-title="" data-des="">Thêm</a>
+</div>
+
+<form>
+    <table style="width:100%" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th width="3%">ID</th>
+                <th>Tiêu đề</th>
+                <th width="12%" style="text-align:center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listAbout != null && listAbout.Count > 0)
+            {
+                int i = 1;
+                foreach (var item in listAbout)
+                {
+
+
+                    <tr>
+                        <td style="text-align:center">@i</td>
+                        <td>@item.Title</td>
+                        <td style="text-align:center">
+
+                            <a href="#exampleModal" data-animation="fadein" data-toggle="modal" data-id="@item.AboutID" data-title="@item.Title" data-des="@item.Des">Edit</a>
+
+                            <span>  |  </span>
+
+                            <input type="button" class="btn" value="Delete" onclick="Xoa(@item.AboutID)" />
+                        </td>
+                    </tr>
+                    i = i + 1;
+                }
+            }
+
+        </tbody>
+    </table>
+</form>
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-lg-11">
+                        <h3 class="modal-title" id="exampleModalLabel"><strong></strong></h3>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Tiêu đề:</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nội Dung:</label>
+                        <textarea  class="form-control" id="contents"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="Edit();">Cập Nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<script src="~/Content/js/bootstrap.js"></script>
+<script src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        var editor = CKEDITOR.replace('contents', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+        });
+        // Cấu hình lại màu nền giao diện và chiều cao
+        CKEDITOR.config.uiColor = '#9AB8F3';
+        CKEDITOR.config.height = '250px';
+    });
+    var id = 0;
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        id = button.data('id');
+        var title = button.data('title');
+        var des = button.data('des');
+        var modal = $(this);
+        modal.find('#title').val(title);
+        CKEDITOR.instances.contents.setData(des);
+        if (id == -1)
+            modal.find('.modal-title').text("Thêm Danh Mục Tin");
+        else
+            modal.find('.modal-title').text("Chỉnh sửa Danh Mục Tin");
+    });
+
+    function Edit() {
+        if ($("#title").val() == "" || CKEDITOR.instances.contents.getData() == '')
+            alert("Mời bạn nhập đầy đủ thông tin!");
+        else {
+            if (id == -1) {
+                const obj = {
+                    Title: $("#title").val(),
+                    Des: CKEDITOR.instances.contents.getData(),
+                    DateAdd: null
+                }
+
+                $.ajax({
+                    type: "POST", url: "/AboutAdmin/Add",
+                    data: JSON.stringify(obj), dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    cache: false, async: true, processData: true, traditional: true,
+                    success: function (data) {
+                        if (data == true) {
+                            alert("Thêm thành công!");
+                            window.location.href = "/Admin/AboutAdmin/ListAbout";
+                        } else {
+                            alert("Đã xãy ra lỗi!");
+                        }
+                    },
+                    error: function (xhr, textStatus) {
+                        console.log(xhr + "\n" + textStatus);
+                    }
+                });
+            }
+            else {
+                var Title = $("#title").val();
+                var des = CKEDITOR.instances.contents.getData();
+                $.ajax({
+                    type: "POST", url: "/AboutAdmin/Edit",
+                    data: JSON.stringify({ id: id, title: Title, des: des }), dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    cache: false, async: true, processData: true, traditional: true,
+                    success: function (data) {
+                        if (data == true) {
+                            alert("Cập nhật thành công!");
+                            window.location.href = "/Admin/AboutAdmin/ListAbout";
+                        } else {
+                            alert("Đã xãy ra lỗi!");
+                        }
+                    },
+                    error: function (xhr, textStatus) {
+                        console.log(xhr + "\n" + textStatus);
+                    }
+                });
+            }
+        }
+    }
+
+    function Xoa(i) {
+        if (confirm("Bạn muốn tiếp tục xóa?")) {
+            const id = { "id": i };
+            $.ajax({
+                type: "POST", url: "/AboutAdmin/Delete",
+                data: JSON.stringify(id), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    if (data == true) {
+                        alert("Xóa thành công!");
+                        window.location.href = "/Admin/AboutAdmin/ListAbout";
+                    } else {
+                        alert("Đã xãy ra lỗi!");
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log(xhr + "\n" + textStatus);
+                }
+            });
+            return;
+        }
+    };
+    
+</script>
+
+
+
+

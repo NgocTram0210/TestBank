@@ -1,0 +1,12 @@
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\Data.dll.config
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\Data.dll
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\Data.pdb
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\EntityFramework.dll
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\EntityFramework.xml
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\obj\Debug\Data.csprojAssemblyReference.cache
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\obj\Debug\Data.csproj.CoreCompileInputs.cache
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\obj\Debug\Data.csproj.CopyComplete
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\obj\Debug\Data.dll
+E:\CUATRAMNHAHIHI\HocTap\HK7\DoAn\NganHangDeThi\Data\obj\Debug\Data.pdb

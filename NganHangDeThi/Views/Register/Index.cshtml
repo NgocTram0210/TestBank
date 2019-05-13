@@ -1,0 +1,155 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Register";
+}
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- fonts -->
+<link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
+<!-- /fonts -->
+<!-- css -->
+<link href="~/Content/Register/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/Register/css/style.css" rel="stylesheet" />
+
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
+<!-- Side Menu -->
+@Html.Partial("~/Views/Home/PartialNav.cshtml")
+<!-- /Side Menu -->
+<style>
+    label.error {
+        color: red;
+        width: 300px;
+        height: 20px;
+        padding: 0 15px;
+        font-size: 17px;
+        margin: 0 auto;
+        display: block;
+    }
+</style>
+
+<h1 class="w3ls">Official Signup Form</h1>
+<div class="content-w3ls">
+    <div class="content-agile1">
+        <h2 class="agileits1">Official</h2>
+        <p class="agileits2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="content-agile2">
+        <form id="myform">
+            <div class="form-control w3layouts">
+                <input type="text" id="firstname" name="firstname" placeholder="First Name" title="Please enter your First Name">
+            </div>
+
+            <div class="form-control w3layouts">
+                <input type="email" id="email" name="email" placeholder="mail@example.com" title="Please enter a valid email">
+            </div>
+
+            <div class="form-control agileinfo">
+                <input type="password" class="lock" name="password" placeholder="Password" id="password1">
+            </div>
+
+            <div class="form-control agileinfo">
+                <input type="password" class="lock" name="confirm-password" placeholder="Confirm password" id="password2">
+            </div>
+
+            <input type="button" class="register" value="Register" id="bt" />
+
+        </form>
+
+
+
+        <p class="wthree w3l">Fast Signup With Your Favourite Social Profile</p>
+        <ul class="social-agileinfo wthree2">
+            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myform").validate({
+            rules: {
+                "firstname": {
+                    required: true
+                },
+                "email": {
+                    required: true
+                },
+                "password": {
+                    required: true,
+                    minlength: 1
+                },
+                "confirm-password": {
+                    required: true,
+                    equalTo: "#password1"
+                }
+            },
+            messages: {
+                "confirm-password": {
+                    equalTo: "Passwords Don't Match."
+                }
+            }
+        });
+    });
+    var form = $("#myform");
+    //form.validate();
+    $("#bt").click(function () {
+        if (form.valid()) {
+            var name = $("#firstname").val();
+            var email = $("#email").val();
+            var pass = $("#password1").val();
+            $.ajax({
+                type: "POST", url: "/Register/Register",
+                data: JSON.stringify({ name: name, email: email, pass: pass }), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    if (data == true) {
+                        //alert("Đăng ký thành công!");
+                        window.location.href = "/Login/Index";
+                    }
+                    else if (data == "Account") {
+                        alert("Tên tài khoản đã tồn tại!");
+                    }
+                    else if (data == "Email") {
+                        alert("Email đã được đăng ký!");
+                    }
+                    else {
+                        alert("Đã xãy ra lỗi!");
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log(xhr + "\n" + textStatus);
+                }
+            });
+        }
+    });
+</script>
+<script type="text/javascript">
+        //window.onload = function () {
+        //    document.getElementById("password1").onchange = validatePassword;
+        //    document.getElementById("password2").onchange = validatePassword;
+        //}
+        //function validatePassword() {
+        //    var pass2 = document.getElementById("password2").value;
+        //    var pass1 = document.getElementById("password1").value;
+        //    if (pass1 !== pass2)
+        //        document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+        //    else
+        //        document.getElementById("password2").setCustomValidity('');
+        //    //empty string means no validation error
+        //}
+</script>

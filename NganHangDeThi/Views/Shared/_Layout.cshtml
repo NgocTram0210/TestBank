@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <!-- Add custom CSS here -->
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!--Side Menu -->
+    @Html.Partial("~/Views/Home/PartialNav.cshtml")
+    <!-- /Side Menu -->
+    <div>
+        <img src="~/Content/img/about.jpg" style="width:100%" />
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <ul class="list-inline">
+                        <li>
+                            <i class="fab fa-facebook-f"></i>
+                        </li>
+                        <li>
+                            <i class="fab fa-twitter"></i>
+                        </li>
+                        <li>
+                            <i class="fab fa-dribbble"></i>
+                        </li>
+                        <li>
+                            <i class="fab fa-pinterest"></i>
+                        </li>
+                    </ul>
+                    <hr>
+                    <p>Copyright &copy; <a href="#">Bank for Math exam</a>  2018</p>
+                    <div class="top-scroll">
+                        <a href="#top"><i class="fa fa-arrow-circle-up scroll"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- JavaScript -->
+    <script src="~/Content/js/jquery-1.10.2.js"></script>
+    <script src="~/Content/js/bootstrap.js"></script>
+    <script src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+</body>
+</html>

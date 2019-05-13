@@ -1,0 +1,68 @@
+﻿@using Data.Entity;
+@using System.Text.RegularExpressions;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Guide> listGuide = ViewBag.listGuide as List<Guide>;
+    List<GuideGroup> listGroup = ViewBag.listGroup as List<GuideGroup>;
+}
+<div class="text-center">
+    <h2 class="main-title">
+        GUIDE<h2>
+            <hr>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div id="topheader">
+            <div class="list-group">
+                @if (listGroup != null && listGroup.Count > 0)
+                {
+                    foreach (var item in listGroup)
+                    {
+                        if (ViewBag.ItemGroup == item.GuideGroupID)
+                        {
+                            <a href="#" class="list-group-item active"><i class="glyphicon glyphicon-question-sign icon-menu"></i> @item.Title</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "Guide",new { id = item.GuideGroupID })" class="list-group-item"><i class="glyphicon glyphicon-question-sign icon-menu"></i> @item.Title</a>
+                        }
+                    }
+                }
+                @*<a href="#" class="list-group-item active">First item</a>
+                    <a href="#" class="list-group-item">Second item</a>
+                    <a href="#" class="list-group-item">Third item</a>*@
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-9 row">
+        @if (listGuide != null && listGuide.Count > 0)
+        {
+            foreach (var item in listGuide)
+            {
+                <div class="col-lg-4">
+                    <div>
+                        <div>
+                            <a href="@Url.Action("Detail", "Guide",new { id = item.ID })"><img src="/Images/Guide/@item.Image" width="100%" /></a>
+                        </div>
+                        <div>
+                            <a href="@Url.Action("Detail", "Guide",new { id = item.ID })"><h4>@item.Title</h4></a>
+                            @{ var t = "";
+                                if (Regex.Replace(item.Des, "<([^>]+)>", "") != null) { if (Regex.Replace(item.Des, "<([^>]+)>", "").Length > 100) { t = Regex.Replace(item.Des, "<([^>]+)>", "").ToString().Substring(0, 100) + "..."; } else { t = Regex.Replace(item.Des, "<([^>]+)>", ""); } }
+                            }
+                            <div>@t</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+<script>
+    $('#topheader .list-group a').on('click', function () {
+        $('#topheader .list-group').find('a.active').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>

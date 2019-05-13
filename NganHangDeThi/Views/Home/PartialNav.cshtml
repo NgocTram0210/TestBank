@@ -1,0 +1,114 @@
+﻿
+<link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" />
+<a id="menu-toggle" href="#" class="btn btn-primary btn-lg toggle"><i class="fa fa-bars"></i></a>
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li>
+            <a id="menu-close" href="#" class="btn btn-default btn-lg pull-right toggle">
+                <i class="fa fa-times"></i>
+            </a>
+        </li>
+        <li class="sidebar-brand">
+            <a>Test Math</a>
+            <hr>
+        </li>
+        <li>
+            <a href="@Url.Action("Index1", "Home")"><i class="fas fa-home" style="float:left;padding-top:2px">&nbsp;Home</i>&nbsp;</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "About",new { id = 0 })"><i class="far fa-address-book" style="float:left;padding-top:2px">&nbsp;About</i>&nbsp;</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "Guide",new { id = 0 })"><i class="fab fa-glide-g" style="float:left;padding-top:2px">&nbsp;Guide</i>&nbsp;</a>
+        </li>
+        @if (Session["ID"] == null)
+        {
+            <li>
+                <a href="@Url.Action("Index", "Login")"><i class="fas fa-sign-in-alt" style="float:left;padding-top:2px">&nbsp;Log In</i>&nbsp;</a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("Index", "Register")"><i class="far fa-registered" style="float:left;padding-top:2px">&nbsp;Register</i>&nbsp;</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@Url.Action("Index", "Login")" onclick="logout()"><i class="fas fa-sign-out-alt" style="float:left;padding-top:2px">&nbsp;Log Out</i>&nbsp;</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "ReportID")"><i class="fas fa-chart-line" style="float:left;padding-top:2px">&nbsp;Report Test</i>&nbsp;</a>
+            </li>
+        }
+
+        <li>
+            <a href="@Url.Action("Index", "AllTest")"><i class="fas fa-user-check" style="float:left;padding-top:2px">&nbsp;Test</i>&nbsp;</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "Ranking")"><i class="fas fa-random" style="float:left;padding-top:2px">&nbsp;Ranking</i>&nbsp;</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "Courses")"><i class="fab fa-discourse" style="float:left;padding-top:2px">&nbsp;Courses</i>&nbsp;</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Index", "News",new { id = 0 })"><i class="fas fa-newspaper" style="float:left;padding-top:2px">&nbsp;News</i>&nbsp;</a>
+        </li>
+        <li>
+            <a href="@Url.Action("Contact", "Home")"><i class="fas fa-file-signature" style="float:left;padding-top:2px">&nbsp;Contact</i>&nbsp;</a>
+        </li>
+    </ul>
+</div>
+<script>
+    function logout() {
+        $.ajax({
+            type: "POST", url: "/Home/Logout", dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            cache: false, async: true, processData: true, traditional: true,
+            success: function (data) {
+
+
+            }
+        });
+    }
+</script>
+<!-- JavaScript -->
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<script src="~/Content/js/bootstrap.js"></script>
+<script src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+
+<script>
+    $("#menu-close").click(function (e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });</script>
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });</script>
+<script>
+    $(function () {
+        $('a[href*=#]:not([href=#])').click(function () {
+            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') || location.hostname === this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });</script>
+<!-- modal -->
+<script>
+    $('.modal').on('shown.bs.modal', function () {
+        var curModal = this;
+        $('.modal').each(function () {
+            if (this !== curModal) {
+                $(this).modal('hide');
+            }
+        });
+    });</script>

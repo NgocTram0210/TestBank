@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NganHangDeThiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Birthday" Type="DateTime" Precision="0" />
+    <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="Decentralization" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="ClassID" />
+    </Key>
+    <Property Name="ClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassName" Type="Int32" />
+    <Property Name="Describe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactID" />
+    </Key>
+    <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Titles" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Mess" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Seen" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Decentralization">
+    <Key>
+      <PropertyRef Name="decentralizationID" />
+    </Key>
+    <Property Name="decentralizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="ExamID" />
+    </Key>
+    <Property Name="ExamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Class" Type="Int32" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AnswerD" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="True" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Level" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="LevelID" />
+    </Key>
+    <Property Name="LevelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LevelName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TestScore">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="Test" Type="Int32" />
+    <Property Name="DateTest" Type="DateTime" Precision="3" />
+    <Property Name="Class" Type="Int32" />
+    <Property Name="Time" Type="Double" />
+    <Property Name="Level" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Cours">
+    <Key>
+      <PropertyRef Name="CoursesID" />
+    </Key>
+    <Property Name="CoursesID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int64" />
+    <Property Name="DateOpen" Type="DateTime" Precision="0" />
+    <Property Name="Des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RegistrationDate" Type="DateTime" Precision="0" />
+    <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Guide">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="GuideCateID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="GuideGroup">
+    <Key>
+      <PropertyRef Name="GuideGroupID" />
+    </Key>
+    <Property Name="GuideGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UserAdd" Type="Int64" />
+    <Property Name="DateAdd" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityContainer Name="NganHangDeThiEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="Classes" EntityType="Self.Class" />
+    <EntitySet Name="Contacts" EntityType="Self.Contact" />
+    <EntitySet Name="Decentralizations" EntityType="Self.Decentralization" />
+    <EntitySet Name="Exams" EntityType="Self.Exam" />
+    <EntitySet Name="Levels" EntityType="Self.Level" />
+    <EntitySet Name="TestScores" EntityType="Self.TestScore" />
+    <EntitySet Name="Courses" EntityType="Self.Cours" />
+    <EntitySet Name="Guides" EntityType="Self.Guide" />
+    <EntitySet Name="GuideGroups" EntityType="Self.GuideGroup" />
+    <FunctionImport Name="ThongKe" ReturnType="Collection(NganHangDeThiModel.ThongKe_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="XepHang" ReturnType="Collection(NganHangDeThiModel.XepHang_Result)">
+      <Parameter Name="class" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <EntitySet Name="News" EntityType="NganHangDeThiModel.News" />
+    <EntitySet Name="NewsCates" EntityType="NganHangDeThiModel.NewsCate" />
+    <EntitySet Name="Abouts" EntityType="NganHangDeThiModel.About" />
+    <FunctionImport Name="XepHangLevel" ReturnType="Collection(NganHangDeThiModel.XepHangLevel_Result)">
+      <Parameter Name="class" Mode="In" Type="Int16" />
+      <Parameter Name="lv" Mode="In" Type="Int16" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="ThongKe_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="AccountID" Nullable="false" />
+    <Property Type="Int32" Name="Test" Nullable="true" />
+    <Property Type="DateTime" Name="DateTest" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="Class" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="XepHang_Result">
+    <Property Type="Int32" Name="Test" Nullable="true" />
+    <Property Type="String" Name="AccountName" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="DateTest" Nullable="true" Precision="23" />
+  </ComplexType>
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="NewsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Cate" Type="Int32" />
+    <Property Name="Des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdd" Type="DateTime" Precision="3" />
+    <Property Name="Image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="NewsCate">
+    <Key>
+      <PropertyRef Name="NewsCateID" />
+    </Key>
+    <Property Name="NewsCateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UserAdd" Type="Int32" />
+    <Property Name="DateAdd" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="About">
+    <Key>
+      <PropertyRef Name="AboutID" />
+    </Key>
+    <Property Name="AboutID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdd" Type="DateTime" Precision="3" />
+  </EntityType>
+  <ComplexType Name="XepHangLevel_Result">
+    <Property Type="Int32" Name="Test" Nullable="true" />
+    <Property Type="String" Name="AccountName" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="DateTest" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>

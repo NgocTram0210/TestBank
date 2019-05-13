@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+<link href="~/Content/css/login.component.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Montserrat:800" rel="stylesheet">
+
+<div class="limiter container" style="margin-top:-100px">
+    <ng-container>
+        <div class="row m-0">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="mx-auto" style="width: 100%; padding-top: 23%;">
+                    <div>
+                        <form class=" validate-form" #frmlogin="ngForm">
+                            <span class="login100-form-title" style="text-align: left">
+                                LOG IN
+                            </span>
+                            <br>
+                            <label>User Name</label>
+                            <div class="wrap-input100 validate-input active input-username-div">
+                                <input class="input100 input-username" type="text" name="username" id="username" autofocus required ngModel>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <label>Password</label>
+                            <div class="wrap-input100 validate-input input-pass-div">
+                                <input class="input100 input-pass" autocomplete="new-password" name="password" id="password" type="password" required
+                                       ngModel>
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="container-login100-form-btn">
+                                <button class="login100-form-btn" type="button" id="dangnhap">
+                                    Log In
+                                </button>
+                            </div>
+
+                            <div class="text-left p-t-12">
+                                <a class="txt2" href="#">
+                                    Do you not have an account?
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+    $('#dangnhap').on('click', function () {
+        var name = $('#username').val();
+        var pass = $('#password').val();
+
+        $.ajax({
+            type: "POST", url: "/Login/Login",
+            data: JSON.stringify({ name: name, pass: pass }), dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            cache: false, async: true, processData: true, traditional: true,
+            success: function (data) {
+                if (data === false) {
+                    alert("Login failed!");
+                }
+                if (data == 1) {
+                    window.location.href = "/Admin/Admin/Index";
+                }
+                if (data == 2) {
+                    window.location.href = "/Home/Index1";
+                }
+
+
+            },
+            error: function (xhr, textStatus) {
+                console.log(xhr + "\n" + textStatus);
+            }
+        });
+
+    });
+</script>

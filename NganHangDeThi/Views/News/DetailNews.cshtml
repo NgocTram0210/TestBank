@@ -1,0 +1,61 @@
+﻿@using Data.Entity;
+@{
+    ViewBag.Title = "DetailNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<News> listNews = ViewBag.listNews as List<News>;
+    List<NewsCate> listGroup = ViewBag.listGroup as List<NewsCate>;
+}
+
+<div class="text-center">
+    <h2 class="main-title">
+        @if (listGroup != null && listGroup.Count > 0)
+        {
+            foreach (var item in listGroup)
+            {
+                if (ViewBag.ItemGroup == item.NewsCateID)
+                {
+                    @item.Title
+                }
+            }
+        }
+        <h2>
+            <hr>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div id="topheader">
+            <div class="list-group">
+                @if (listGroup != null && listGroup.Count > 0)
+                {
+                    foreach (var item in listGroup)
+                    {
+                        if (ViewBag.ItemGroup == item.NewsCateID)
+                        {
+                            <a href="@Url.Action("Index", "News",new { id = item.NewsCateID })" class="list-group-item active"><i class="glyphicon glyphicon-pencil icon-menu"></i> @item.Title</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "News",new { id = item.NewsCateID })" class="list-group-item"><i class="glyphicon glyphicon-pencil icon-menu"></i> @item.Title</a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-9">
+        @if (listNews != null && listNews.Count > 0)
+        {
+            foreach (var item in listNews)
+            {
+                <div>
+                    <h2>@item.Title</h2>
+                    <hr />
+                </div>
+                <div>@item.DateAdd</div>
+                <div>@Html.Raw(item.Des)</div>
+            }
+        }
+    </div>
+</div>
+

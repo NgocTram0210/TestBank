@@ -1,0 +1,119 @@
+﻿@using Data.Entity;
+@using System.Data;
+@{
+    ViewBag.Title = "QL Contact";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    List<Contact> listContact = ViewBag.listContact as List<Contact>;
+}
+<style>
+
+    thead th {
+        padding: 10px 18px;
+        border-bottom: 1px solid #111;
+        text-align: center;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    tbody td {
+        padding: 10px 18px;
+    }
+
+    a {
+        color: #039be5;
+        text-decoration: none;
+    }
+</style>
+<h3 style="padding-top:50px;padding-bottom:30px; font-family:'Times New Roman', Times, serif">
+    DANH SÁCH PHẢN HỒI CỦA KHÁCH HÀNG
+</h3>
+<div class="row">
+    <div class="col-lg-2">
+        <select id="seen" style="width:100%" class="form-control" onchange="Filter()">
+            <option value="-1">--Tất cả--</option>
+            <option value="1">Seen</option>
+            <option value="0">Not Seen</option>
+        </select>
+    </div>
+    <div class="col-lg-2">
+        <input id="txtFilter" class="form-control" />
+    </div>
+    <div class="col-lg-2">
+        <button id="btnFilter" onclick="Filter()" class="btn btn-light"><i class="fa fa-search"></i></button>
+
+    </div>
+    </div>
+    <form>
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th width="5%">ID</th>
+                    <th width="18%">Name</th>
+                    <th width="22%">Email</th>
+                    <th width="25%">Title</th>
+                    <th width="25%">Mess</th>
+                    <th width="5%">Seen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (listContact != null && listContact.Count > 0)
+                {
+                    int i = 1;
+                    foreach (var item in listContact)
+                    {
+                        <tr>
+                            <td>@i</td>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.Titles</td>
+                            <td>@item.Mess</td>
+                            <td style="text-align:center">
+                                @if (item.Seen == false)
+                                {
+                                    <lable><input type="checkbox" id="@item.ContactID" onchange="up(@item.ContactID)" /></lable>}
+                                else
+                                {
+                                    <lable><input type="checkbox" id="@item.ContactID" checked="checked" onchange="up(@item.ContactID)" /></lable>
+                                }
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+                }
+
+            </tbody>
+        </table>
+    </form>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script>
+        $('#seen').val(@ViewBag.Seen);
+        $('#txtFilter').val('@ViewBag.Tl');
+        function Filter() {
+            window.location.href = "/Admin/QLContact/Index?seen="+$('#seen').val()+"&title="+$('#txtFilter').val();
+        }
+        function up(id) {
+            const t = document.getElementById(id);
+            const seen = t.checked;
+            $.ajax({
+                type: "POST", url: "/QLContact/Up",
+                data: JSON.stringify({ id: id, seen: seen }), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    if (data == true) {
+                    }
+                    else {
+                        alert("Đã xãy ra lỗi!");
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log(xhr + "\n" + textStatus);
+                }
+            });
+        };
+
+
+    </script>

@@ -1,0 +1,60 @@
+﻿@using Data.Entity;
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Guide> listGuide = ViewBag.Guide as List<Guide>;
+    List<GuideGroup> listGroup = ViewBag.listGroup as List<GuideGroup>;
+}
+
+<div class="text-center">
+    <h2 class="main-title">
+        @if (listGroup != null && listGroup.Count > 0)
+        {
+            foreach (var item in listGroup)
+            {
+                if (ViewBag.ItemGroup == item.GuideGroupID)
+                {
+                    @item.Title
+                }
+            }
+        }
+        <h2>
+            <hr>
+</div>
+<div class="row">
+    <div class="col-lg-3">
+        <div id="topheader">
+            <div class="list-group">
+                @if (listGroup != null && listGroup.Count > 0)
+                {
+                    foreach (var item in listGroup)
+                    {
+                        if (ViewBag.ItemGroup == item.GuideGroupID)
+                        {
+                <a href="@Url.Action("Index", "Guide",new { id = item.GuideGroupID })" class="list-group-item active"><i class="glyphicon glyphicon-question-sign icon-menu"></i> @item.Title</a>
+                        }
+                        else
+                        {
+                <a href="@Url.Action("Index", "Guide",new { id = item.GuideGroupID })" class="list-group-item"><i class="glyphicon glyphicon-question-sign icon-menu"></i> @item.Title</a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-9">
+        @if (listGuide != null && listGuide.Count > 0)
+        {
+            foreach (var item in listGuide)
+            {
+                <div>
+                    <h2>@item.Title</h2>
+                    <hr />
+                </div>
+                <div>@item.Date</div>
+                <div>@Html.Raw(item.Des)</div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NganHangDeThiModelStoreContainer" CdmEntityContainer="NganHangDeThiEntities1">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Decentralization" ColumnName="Decentralization" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Classes">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Class">
+        <MappingFragment StoreEntitySet="Class">
+          <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="Describe" ColumnName="Describe" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Contact">
+        <MappingFragment StoreEntitySet="Contact">
+          <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Titles" ColumnName="Titles" />
+          <ScalarProperty Name="Mess" ColumnName="Mess" />
+          <ScalarProperty Name="Seen" ColumnName="Seen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Decentralizations">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Decentralization">
+        <MappingFragment StoreEntitySet="Decentralization">
+          <ScalarProperty Name="decentralizationID" ColumnName="decentralizationID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Exams">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Exam">
+        <MappingFragment StoreEntitySet="Exam">
+          <ScalarProperty Name="ExamID" ColumnName="ExamID" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="AnswerA" ColumnName="AnswerA" />
+          <ScalarProperty Name="AnswerB" ColumnName="AnswerB" />
+          <ScalarProperty Name="AnswerC" ColumnName="AnswerC" />
+          <ScalarProperty Name="AnswerD" ColumnName="AnswerD" />
+          <ScalarProperty Name="True" ColumnName="True" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Levels">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Level">
+        <MappingFragment StoreEntitySet="Level">
+          <ScalarProperty Name="LevelID" ColumnName="LevelID" />
+          <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestScores">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.TestScore">
+        <MappingFragment StoreEntitySet="TestScore">
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Test" ColumnName="Test" />
+          <ScalarProperty Name="DateTest" ColumnName="DateTest" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Cours">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="CoursesID" ColumnName="CoursesID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+          <ScalarProperty Name="Des" ColumnName="Des" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Guides">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.Guide">
+        <MappingFragment StoreEntitySet="Guide">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Des" ColumnName="Des" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="GuideCateID" ColumnName="GuideCateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GuideGroups">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.GuideGroup">
+        <MappingFragment StoreEntitySet="GuideGroup">
+          <ScalarProperty Name="GuideGroupID" ColumnName="GuideGroupID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+          <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ThongKe" FunctionName="NganHangDeThiModel.Store.ThongKe">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NganHangDeThiModel.ThongKe_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Test" ColumnName="Test" />
+          <ScalarProperty Name="DateTest" ColumnName="DateTest" />
+          <ScalarProperty Name="Class" ColumnName="Class" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="XepHang" FunctionName="NganHangDeThiModel.Store.XepHang">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NganHangDeThiModel.XepHang_Result">
+          <ScalarProperty Name="Test" ColumnName="Test" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="DateTest" ColumnName="DateTest" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="News">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.News">
+        <MappingFragment StoreEntitySet="News">
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+          <ScalarProperty Name="Des" ColumnName="Des" />
+          <ScalarProperty Name="Cate" ColumnName="Cate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="NewsID" ColumnName="NewsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NewsCates">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.NewsCate">
+        <MappingFragment StoreEntitySet="NewsCate">
+          <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+          <ScalarProperty Name="UserAdd" ColumnName="UserAdd" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="NewsCateID" ColumnName="NewsCateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Abouts">
+      <EntityTypeMapping TypeName="NganHangDeThiModel.About">
+        <MappingFragment StoreEntitySet="About">
+          <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+          <ScalarProperty Name="Des" ColumnName="Des" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="AboutID" ColumnName="AboutID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="XepHangLevel" FunctionName="NganHangDeThiModel.Store.XepHangLevel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NganHangDeThiModel.XepHangLevel_Result">
+          <ScalarProperty Name="Test" ColumnName="Test" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="DateTest" ColumnName="DateTest" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

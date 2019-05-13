@@ -1,0 +1,107 @@
+﻿@using Data.Entity;
+@using System.Data;
+@{
+    ViewBag.Title = "QL Khách Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    List<Account> listAccount = ViewBag.listAccount as List<Account>;
+}
+
+<style>
+
+    thead th {
+        border-bottom: 1px solid #111;
+        text-align: center;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    a {
+        color: #039be5;
+        text-decoration: none;
+    }
+</style>
+
+<h3 style="padding-top:50px;padding-bottom:30px; font-family:'Times New Roman', Times, serif">
+    DANH SÁCH CÁC KHÁCH HÀNG
+</h3>
+
+<div style="display:block; text-align:right">
+    <a href="@Url.Action("Edit","QuanLy",new { id = 0 })" class="btn btn-primary">Thêm Khách Hàng</a>
+</div>
+
+<form>
+    <table style="width:100%" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th width="3%">ID</th>
+                <th width="12%">Họ Tên</th>
+                <th width="12%">Email</th>
+                <th width="12%">CreateDate</th>
+                <th width="5%">Status</th>
+                <th width="12%">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listAccount != null && listAccount.Count > 0)
+                        {
+                            int i = 1;
+                            foreach (var item in listAccount)
+                            {
+                    <tr>
+                        <td style="text-align:center">@i</td>
+                        <td>@item.AccountName</td>
+                        <td>@item.Email</td>
+                                    @{var create = item.CreateDate.ToString().Split('/')[1]+"/"+ item.CreateDate.ToString().Split('/')[0]+ "/" + item.CreateDate.ToString().Split('/')[2].ToString().Substring(0, 4);}
+                        <td style="text-align:center">@create</td>
+                        <td style="text-align:center">@if (item.Status == true) { <img src="~/Areas/Admin/Images/check.gif" />} else {<img src="~/Areas/Admin/Images/un_check.gif" /> } </td>
+
+<td style="text-align:center">
+
+<a href="@Url.Action("Edit","QuanLy",new { id = item.AccountID })">Edit</a>
+
+<span>  |  </span>
+
+<input type="button" class="btn" value="Delete" onclick="Xoa(@item.AccountID)" />
+                        </td>
+                    </tr>
+                                                i = i+1;
+                                            }
+                                        }
+
+        </tbody>
+    </table>
+</form>
+
+
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<script src="~/Content/js/bootstrap.js"></script>
+<script src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+
+
+<script>
+    function Xoa(i) {
+        if (confirm("Bạn muốn tiếp tục xóa?")) {
+            const id = { "id": i };
+            $.ajax({
+                type: "POST", url: "/QuanLy/Delete",
+                data: JSON.stringify(id), dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                cache: false, async: true, processData: true, traditional: true,
+                success: function (data) {
+                    if (data == true) {
+                        alert("Xóa thành công!");
+                        window.location.href = "/Admin/QuanLy/KhachHang";
+                    } else {
+                        alert("Đã xãy ra lỗi!");
+                    }
+                },
+                error: function (xhr, textStatus) {
+                    console.log(xhr + "\n" + textStatus);
+                }
+            });
+            return;
+        }
+    };
+
+</script>
+

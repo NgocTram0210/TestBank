@@ -1,0 +1,61 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+    <link href="~/Scripts/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="table-responsive" data-pattern="priority-columns">
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" width="1">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1"></label>
+                        </div>
+                    </th>
+                    <th class="resizeable">Danh mục</th>
+                    <th class="resizeable">Mô tả</th>
+                    <th width="1">Bài viết</th>
+                    <th width="1">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="align-middle text-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1"></label>
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <a href="#">Thể Thao</a>
+                    </td>
+                    <td class="align-middle text-muted">
+                        Thông tin thể thao.....description for SEO/ not need!
+                    </td>
+                    <td class="align-middle text-md-center">
+                        <a href="#" class="text-danger font-14"><span>1</a>
+                    </td>
+                    <td class="align-middle">
+                        <i class="fas fa-long-arrow-up text-secondary" data-toggle="tooltip" data-placement="top" title="move Up"></i><i class="fas fa-long-arrow-down text-secondary" data-toggle="tooltip" data-placement="bottom" title="move Down"></i>
+                        <i class="far fa-sliders-h text-secondary ml-1" data-toggle="tooltip" data-placement="top" title="edit"></i>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <script src="~/Scripts/rwd-table/rwd-table.min.js"></script>
+    <script src="~/Scripts/rwd-table/responsive-table.init.js"></script>
+</body>
+</html>
